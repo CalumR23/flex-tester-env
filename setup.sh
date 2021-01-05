@@ -243,6 +243,60 @@ rstaging ()
 	notify-send "The bundle is ready for testing!"
 }
 
+dlhf()
+{  
+# Clear out {username} and add your own username for this to work
+# Clean out old copy
+	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
+	rm -rf $cwd/bundles/hotfixer
+
+# Create directories that will be used
+	echo -e "\e[44mCreating folders for bundle backup if they don't exist\e[0m"
+	mkdir -p bundles/hotfixer
+
+# Check download it
+   echo -e "\e[44mDownloading the master snapshot if its updated\e[0m"
+  read -p 'Please specify download link for portal: ' portaldl
+	wget -c -N --user=username--ask-password $portaldl -P $cwd/bundles/hotfixer
+	7z x $cwd/bundles/hotfixer/*.7z -O$cwd/bundles/hotfixer
+	echo -e "\e[44mDone downloading or checking\e[0m"
+
+	cd $cwd/bundles/hotfixer/*/
+	echo -e 'Changed directory to liferay.home'
+	echo -e 'Current directory 2: ' $(pwd)
+  
+#  Download proper patching tool
+	echo -e "\e[44mDownloading the patching tool\e[0m"
+	rm -rf $cwd/bundles/hotfixer/*/patching-tool
+  read -p 'Please specify download link for patching tool: ' patchdl
+	wget -c -N --user=username--ask-password $patchdl -P $cwd/bundles/hotfixer/*/
+	unzip $cwd/bundles/hotfixer/*/*.zip -d $cwd/bundles/hotfixer/*/
+	echo -e "\e[44mDone downloading or checking\e[0m"
+
+	#Change directory into patching tool folder
+	echo -e 'Current directory 3: ' $(pwd)
+ 	cd $cwd/bundles/hotfixer/*/patching-tool
+ 	echo -e 'changing into patching tool directory..' $(pwd)
+  
+  # Navigate into patching tool and run commands to install patch
+	echo -e "\e[44mRunning auto-discovery\e[0m"
+	 $cwd/bundles/hotfixer/*/patching-tool/patching-tool.sh auto-discovery 
+	echo -e "\e[44mDownloading the hotfix\e[0m"
+	read -p 'Please specify download link for the fixpack: ' fixpackdl
+	wget -c -N --user=username--ask-password $fixpackdl -P $cwd/bundles/hotfixer/*/patching-tool/patches
+	read -p 'Please specify download link for the hotfix: ' hotfixdl
+	wget -c -N --user=username--ask-password $hotfixdl -P $cwd/bundles/hotfixer/*/patching-tool/patches
+	$cwd/bundles/hotfixer/*/patching-tool/patching-tool.sh install 
+
+	# Deleting Data and Logs folders and cleaning DB
+	cd $cwd/bundles/hotfixer/*/
+	echo -e "\e[44mDeleting the logs and data folder\e[0m"
+	rm -r data
+	rm -r logs
+	echo -e "\e[44mRunning the cleandb command-1\e[0m"
+	cleandb
+}
+
 #### Help documentation
 
 usage ()
@@ -258,10 +312,11 @@ usage ()
 	clean              - Deletes everything except bundles, resources and setup.sh
 	cleandb            - Cleans the database if it already exists
 	cleanmaster        - Doesn't download, just cleans up completely
-	cluster		   - Sets up a clean 2 cluster node
+	cluster		   	   - Sets up a clean 2 cluster node
 	createdb           - Creates the database
 	dl71               - Downloads the 7.1 CE GA3
 	dlmaster           - Downloads the latest master
+	dlhf			   - Sets up a download for a hotfix test
 	rstaging           - Sets up remote staging where remote is 8080 and live is 9080
 
 
