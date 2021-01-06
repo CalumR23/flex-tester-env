@@ -6,7 +6,7 @@
 https://files.liferay.com/private/ee/portal/7.3.10/liferay-dxp-tomcat-7.3.10-ga1-20200930160533946.7z
 
 # Patching Tool
-https://files.liferay.com/private/ee/fix-packs/patching-tool/patching-tool-2.0.15.zip
+https://files.liferay.com/private/ee/fix-packs/patching-tool/patching-tool-3.0.12.zip
 
 
 ## 7.2 Hotfixes 
@@ -31,3 +31,15 @@ https://files.liferay.com/private/ee/fix-packs/patching-tool/patching-tool-2.0.1
 
 # Fixpack
 https://files.liferay.com/private/ee/fix-packs/7.1.10/dxp/liferay-fix-pack-dxp-8-7110.zip
+
+
+## 7.0 hotfixes
+
+# Bundle download
+https://files.liferay.com/private/ee/portal/7.0.10/liferay-dxp-digital-enterprise-tomcat-7.0-ga1-20160617092557801.zip
+
+## Patching tool
+https://files.liferay.com/private/ee/fix-packs/patching-tool/patching-tool-2.0.11.zip
+
+## Fixpack
+https://files.liferay.com/private/ee/fix-packs/7.0.10/de/liferay-fix-pack-de-96-7010.zip
